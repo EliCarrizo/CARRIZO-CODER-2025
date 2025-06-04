@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*Primer pre entrega*/
 
 # API de Productos y Carritos
@@ -26,3 +27,6 @@ npm start
 ```
 
 Ingreso en `http://localhost:8080`
+=======
+# CARRIZO-CODER-2025
+>>>>>>> 47dd41ec838ad21216ca4d3ff788c8d48e29eda9
