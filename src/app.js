@@ -2,65 +2,16 @@ import express from 'express';
 import ProductManager from "./ProductManager.js";
 
 const app = express();
+const io = new Server(server);
+
+//handlebars
+app.engine('handlebars', handlebars.engine());
+app.set('view engine', 'handlebars');
+app.set('views', './src/views');
 
 app.use(express.json());
 
 const productManager = new ProductManager("./src/products.json");
-
-//GET -
-app.get("/", (req, res)=> {
-
-  res.json({ status: "success", message: "Skateaboarding" });
-});
-
-app.get("/api/products", async(req, res)=> {
-  try {
-    const products = await productManager.getProducts();
-
-    res.status(200).json({ status: "Correcto", products });
-  } catch (error) {
-    res.status(500).json({ status: "Error xx" });
-  }
-});
-
-//POST
-app.post("/api/products", async(req, res) => {
-  try {
-    const newProduct = req.body;
-    const products = await productManager.addProduct(newProduct);
-    res.status(201).json({ status : "Correcto", products });
-  } catch (error) {
-    res.status(500).json({ status: "Error xx" });
-  }
-});
-
-//DELETE
-app.delete("/api/products/:pid", async(req, res)=> {
-  try {
-    const productId = req.params.pid;
-    const products = await productManager.deleteProductById(productId);
-    res.status(200).json({ status: "Correcto", products });
-  } catch (error) {
-    res.status(500).json({ status: "Error xx" });
-  }
-});
-
-//PUT
-app.put("/api/products/:pid", async(req, res)=> {
-  try {
-    const productId = req.params.pid;
-    const updatedData = req.body;
-
-    const products = await productManager.updateProductById(productId, updatedData);
-    res.status(200).json({ status: "Correcto", products });
-  } catch (error) {
-    res.status(500).json({ status: "Error xx" });
-  }
-});
-
-//getProductById
-
-/*ME RESTARIA*/
 
 
 import productRouter from './routes/products.router.js';
