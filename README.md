@@ -1,4 +1,7 @@
 
+/*segunda pre entrega*/
+Configurar proyecto para que trabaje con Handlebars y websocket.
+
 /*Primer pre entrega*/
 
 # API de Productos y Carritos
