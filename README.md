@@ -1,8 +1,8 @@
+👩‍💻Se finaliza trabajo con mucho sacrificio, entrego lo solicitado en el curso
 
-/*segunda pre entrega*/
+🚩segunda pre entrega:
 Configurar proyecto para que trabaje con Handlebars y websocket.
-
-/*Primer pre entrega*/
+🚩Primer pre entrega
 
 # API de Productos y Carritos
 
@@ -32,4 +32,6 @@ npm start
 Ingreso en `http://localhost:8080`
 
 # CARRIZO-CODER-2025
+
+👽Gracias por estos nuevos conocimientos!
 
