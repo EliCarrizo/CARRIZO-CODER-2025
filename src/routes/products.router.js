@@ -4,14 +4,47 @@ import ProductManager from '../managers/ProductManager.js';
 const router = Router();
 const pm = new ProductManager('products.json');
 
-router.get('/', async (req, res) => {
-  const products = await pm.getProducts();
-  res.json(products);
-});
+router.get("/", async (req, res) => {
+  const { limit = 10, page = 1, sort, query } = req.query;
+  const options = {
+    limit: parseInt(limit),
+    page: parseInt(page),
+    sort: sort ? { price: sort === "asc" ? 1 : -1 } : undefined,
+  };
 
-router.get('/:pid', async (req, res) => {
-  const product = await pm.getProductById(req.params.pid);
-  product ? res.json(product) : res.status(404).send('Producto no encontrado');
+  const filter = query
+    ? {
+        $or: [
+          { category: { $regex: query, $options: "i" } },
+          { availability: { $regex: query, $options: "i" } }
+        ]
+      }
+    : {};
+
+  try {
+    const result = await productModel.paginate(filter, options);
+
+    const buildLink = (pageNum) => {
+      return `${req.baseUrl}?limit=${limit}&page=${pageNum}${
+        sort ? `&sort=${sort}` : ""
+      }${query ? `&query=${query}` : ""}`;
+    };
+
+    res.send({
+      status: "success",
+      payload: result.docs,
+      totalPages: result.totalPages,
+      prevPage: result.prevPage,
+      nextPage: result.nextPage,
+      page: result.page,
+      hasPrevPage: result.hasPrevPage,
+      hasNextPage: result.hasNextPage,
+      prevLink: result.hasPrevPage ? buildLink(result.prevPage) : null,
+      nextLink: result.hasNextPage ? buildLink(result.nextPage) : null,
+    });
+  } catch (error) {
+    res.status(500).send({ status: "error", error: error.message });
+  }
 });
 
 router.post('/', async (req, res) => {

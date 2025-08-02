@@ -47,4 +47,37 @@ export default class CartManager {
     await this._writeFile(carts);
     return cart;
   }
+
+  // Eliminar un producto
+async deleteProductFromCart(cartId, productId) {
+  const cart = await cartModel.findById(cartId);
+  cart.products = cart.products.filter(p => p.product.toString() !== productId);
+  return await cart.save();
+}
+
+// Actualizar todos los productos
+async updateCartProducts(cartId, newProducts) {
+  const cart = await cartModel.findById(cartId);
+  cart.products = newProducts;
+  return await cart.save();
+}
+
+// Actualizar cantidad
+async updateProductQuantity(cartId, productId, quantity) {
+  const cart = await cartModel.findById(cartId);
+  const productInCart = cart.products.find(p => p.product.toString() === productId);
+  if (productInCart) {
+    productInCart.quantity = quantity;
+  }
+  return await cart.save();
+}
+
+// Vaciar carrito
+async clearCart(cartId) {
+  const cart = await cartModel.findById(cartId);
+  cart.products = [];
+  return await cart.save();
+}
+
+
 }
