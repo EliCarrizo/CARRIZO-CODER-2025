@@ -1,0 +1,28 @@
+<h1>Productos</h1>
+
+<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+  {{#each payload}}
+    <div style="border: 1px solid #ccc; padding: 1rem; width: 250px;">
+      <h3>{{this.title}}</h3>
+      <p><strong>Precio:</strong> ${{this.price}}</p>
+      <p><strong>Categoría:</strong> {{this.category}}</p>
+      <p><strong>Stock:</strong> {{this.stock}}</p>
+      <a href="/products/{{this._id}}">Ver detalle</a>
+      <form action="/api/carts/64c4e9e10a6a0b1f3c9f88e3/products/{{this._id}}" method="POST">
+        <button type="submit">Agregar al carrito</button>
+      </form>
+    </div>
+  {{/each}}
+</div>
+
+<div style="margin-top: 2rem;">
+  {{#if hasPrevPage}}
+    <a href="{{prevLink}}">Anterior</a>
+  {{/if}}
+
+  <span>Página {{page}} de {{totalPages}}</span>
+
+  {{#if hasNextPage}}
+    <a href="{{nextLink}}">Siguiente</a>
+  {{/if}}
+</div>
